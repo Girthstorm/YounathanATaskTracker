@@ -1,26 +1,14 @@
-// Modal component for adding a new task
 let addATask = document.getElementById("addATask");
-
-// Counters for tasks in different states
-let toDoCount = document.getElementById("toDoCount"); // Counter for "To Do" tasks
-let inProgressCount = document.getElementById("inProgressCount"); // Counter for "In Progress" tasks
-let doneCount = document.getElementById("doneCount"); // Counter for "Done" tasks
-
-// The div container holding the task list
+let toDoCount = document.getElementById("toDoCount"); 
+let inProgressCount = document.getElementById("inProgressCount"); 
+let doneCount = document.getElementById("doneCount"); 
 let taskDiv = document.getElementById("taskDiv");
-
-// Dropdowns for selecting task priority and status
-let list1 = document.getElementById("list1"); // Dropdown for selecting task priority
-let list2 = document.getElementById("list2"); // Dropdown for selecting task status
-
-// Input fields for adding a new task
-let taskName = document.getElementById("taskName"); // Input for the task's name
-let taskDesc = document.getElementById("taskDesc"); // Input for the task's description
-let taskDate = document.getElementById("taskDate"); // Input for the task's due date
-
-// Button for submitting the new task
-let makeTask = document.getElementById("makeTask"); // Button to add the new task
-
+let list1 = document.getElementById("list1"); 
+let list2 = document.getElementById("list2"); 
+let taskName = document.getElementById("taskName"); 
+let taskDesc = document.getElementById("taskDesc"); 
+let taskDate = document.getElementById("taskDate"); 
+let makeTask = document.getElementById("makeTask"); 
 
 document.addEventListener("DOMContentLoaded", function() {
     makeTask.addEventListener("click", function() {
@@ -28,9 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let taskDescValue = taskDesc.value;
         let taskDateValue = taskDate.value;
         let priorityValue = list1.value;
-        let statusValue = list2.options[list2.selectedIndex].text; // Get the text, not the value
-
-        
+        let statusValue = list2.options[list2.selectedIndex].text;
         let taskElement = document.createElement("div");
         taskElement.classList.add("task", "card");
         taskElement.innerHTML = `
@@ -50,13 +36,10 @@ document.addEventListener("DOMContentLoaded", function() {
         list1.selectedIndex = 0;
         list2.selectedIndex = 0;
         updateCount(statusValue, true);
-
-        // Advance status button logic
         taskElement.querySelector('.advance-status').addEventListener('click', function() {
             let statusSpan = taskElement.querySelector('.status span');
             let currentStatus = statusSpan.textContent;
             let newStatus;
-
             switch (currentStatus) {
                 case 'To Do':
                     newStatus = 'In Progress';
@@ -68,18 +51,13 @@ document.addEventListener("DOMContentLoaded", function() {
                     // Optional: Handle if needed, such as disabling the button
                     this.textContent = 'Completed';
                     this.disabled = true;
-                    return; // Skip updating counts since it's completed
+                    return;
             }
-
-            // Update the task's status
             statusSpan.textContent = newStatus;
-
-            // Update counts
-            updateCount(currentStatus, false); // Decrement current status count
-            updateCount(newStatus, true); // Increment new status count
+            updateCount(currentStatus, false);
+            updateCount(newStatus, true);
         });
     });
-
     function updateCount(status, increment) {
         let countElement;
         switch (status) {
@@ -93,8 +71,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 countElement = doneCount;
                 break;
         }
-
-        // Update the count based on increment or decrement
         let currentCount = parseInt(countElement.textContent);
         countElement.textContent = increment ? currentCount + 1 : currentCount - 1;
     }
